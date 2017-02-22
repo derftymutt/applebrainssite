@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "Test";
+    Layout = "~/Views/Shared/_LayoutThemed.cshtml";
+}
+
+<h2>Test</h2>
+
+Testesteststestsetsetsetsetsetsetset
+
+<div ng-controller="controller as main">
+    {{main.test}}
+</div>
+
+@section scripts {
+    <script>
+
+        (function () {
+
+            angular.module("app").controller("controller", Controller);
+
+            function Controller() {
+
+
+                vm = this;
+
+                vm.test = "TESTING ANGULAR";
+            }
+
+
+
+
+        }());
+        
+
+    </script>
+    
+    
+    
+    
+    
+    }
