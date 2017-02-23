@@ -6,3 +6,36 @@
 
 <h2>Create</h2>
 
+<div ng-controller="controller as main">
+    {{main.test}}
+</div>
+
+@section scripts {
+    <script>
+
+        (function () {
+
+            angular.module("app").controller("controller", Controller);
+
+            Controller.$inject = ['$baseController'];
+
+            function Controller($baseController) {
+             
+                vm = this;
+
+                $baseController.merge($baseController, vm);
+
+                vm.test = "TESTING ANGULAR";
+
+                vm.$log.debug("vm.test: ", vm.test);
+            }
+
+        }());
+
+    </script>
+
+
+
+
+
+}
