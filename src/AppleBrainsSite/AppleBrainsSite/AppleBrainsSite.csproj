@@ -236,7 +236,10 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Classes\Exceptions\IdentityResultException.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ApiControllers\BaseApiController.cs" />
+    <Compile Include="Controllers\ApiControllers\FruitApiController.cs" />
     <Compile Include="Controllers\ApiControllers\TestDIApiController.cs" />
+    <Compile Include="Controllers\FruitController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -245,6 +248,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Requests\FruitCreateRequest.cs" />
     <Compile Include="Models\Responses\BaseResponse.cs" />
     <Compile Include="Models\Responses\ErrorResponse.cs" />
     <Compile Include="Models\Responses\ItemResponse.cs" />
@@ -252,6 +256,8 @@
     <Compile Include="Models\Responses\SuccessResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\BaseService.cs" />
+    <Compile Include="Services\FruitService.cs" />
+    <Compile Include="Services\Interfaces\IFruitService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -629,6 +635,7 @@
     <Content Include="scss\_testimonial.scss" />
     <Content Include="scss\_ui-kit.scss" />
     <Content Include="Views\Home\Test.cshtml" />
+    <Content Include="Views\Fruit\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
