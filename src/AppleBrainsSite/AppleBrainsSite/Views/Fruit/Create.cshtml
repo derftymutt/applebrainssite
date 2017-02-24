@@ -4,11 +4,35 @@
     Layout = "~/Views/Shared/LayoutThemed2.cshtml";
 }
 
-<h2>Create</h2>
-
 <div ng-controller="controller as main">
-    {{main.test}}
+    <div>
+        <h2>Add a Fruit</h2>
+        {{main.test}}
+
+        <div class="row">
+            <div class="col-md-6">
+                <form>
+                    <div class="form-group">
+                        <label for="email">Email address:</label>
+                        <input type="email" class="form-control" id="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="pwd">Password:</label>
+                        <input type="password" class="form-control" id="pwd">
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox"> Remember me</label>
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
 </div>
+
+
 
 @section scripts {
     <script>
@@ -17,17 +41,17 @@
 
             angular.module("app").controller("controller", Controller);
 
-            Controller.$inject = ['$baseController'];
+            Controller.$inject = ['$log'];
 
-            function Controller($baseController) {
+            function Controller($log) {
              
                 vm = this;
 
-                $baseController.merge($baseController, vm);
+               // $baseController.merge($baseController, vm);
 
                 vm.test = "TESTING ANGULAR";
 
-                vm.$log.debug("vm.test: ", vm.test);
+                $log.debug("vm.test: ", vm.test);
             }
 
         }());

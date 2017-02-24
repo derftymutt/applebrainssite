@@ -277,6 +277,7 @@
     <Content Include="css\img\controls.png" />
     <Content Include="css\isotope.css" />
     <Content Include="css\jquery.bxslider.css" />
+    <Content Include="css\mycss.css" />
     <Content Include="css\overwrite.css" />
     <Content Include="css\prettyPhoto.css" />
     <Content Include="css\style.css" />
