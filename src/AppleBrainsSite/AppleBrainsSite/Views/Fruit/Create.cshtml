@@ -4,32 +4,59 @@
     Layout = "~/Views/Shared/LayoutThemed2.cshtml";
 }
 
+@section styles{
+    
+  <style>
+
+.formDiv {
+    /*margin: auto 0;*/
+    border: 1px solid black;
+    margin-bottom: 10px;
+    background-color: lightgreen;
+    padding-bottom: 10px;
+}
+    .fruitColor {
+        color: red;
+        font-style:italic; 
+    }
+
+    </style>
+    
+    
+    
+    
+    }
+
 <div ng-controller="controller as main">
-    <div>
-        <h2>Add a Fruit</h2>
-        {{main.test}}
+   
+        
+       
 
         <div class="row">
-            <div class="col-md-6">
+            
+            <div class="col-md-6 col-md-offset-3 formDiv">
+                <h2>Add a <span class="fruitColor">Fruit!</span></h2>
                 <form>
                     <div class="form-group">
-                        <label for="email">Email address:</label>
-                        <input type="email" class="form-control" id="email">
+                        <label for="email">Fruit name:</label>
+                        <input type="text" class="form-control" id="fruitName">
                     </div>
                     <div class="form-group">
-                        <label for="pwd">Password:</label>
-                        <input type="password" class="form-control" id="pwd">
-                    </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox"> Remember me</label>
-                    </div>
+                        <label for="fruitFile">Upload:</label>
+                        <input type="file" id="fruitFile">
+                    </div>   
+                    <div class="form-group">
+                        <label for="imageUrl">Image Url:</label>
+                        <input type="text" class="form-control" id="fruitImage">
+                    </div>    
+                               
                     <button type="submit" class="btn btn-default">Submit</button>
                 </form>
             </div>
         </div>
 
 
-    </div>
+   
 </div>
 
 
