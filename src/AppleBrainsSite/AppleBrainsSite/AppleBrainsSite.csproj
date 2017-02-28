@@ -385,6 +385,7 @@
     <Content Include="images\slider\1.jpg" />
     <Content Include="images\slider\2.jpg" />
     <Content Include="images\slider\3.jpg" />
+    <Content Include="images\slider\fruitmarket1.jpg" />
     <Content Include="js\bootstrap.js" />
     <Content Include="js\bootstrap.min.js" />
     <Content Include="js\component.js" />
@@ -617,6 +618,7 @@
     <Content Include="Views\Home\Test.cshtml" />
     <Content Include="Views\Fruit\Create.cshtml" />
     <Content Include="Views\Shared\LayoutThemed2.cshtml" />
+    <Content Include="Views\Fruit\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -12,6 +12,21 @@ namespace AppleBrainsSite.Services
 {
     public class FruitService : IFruitService
     {
+        private static Fruit MapRequest(IDataReader reader)
+        {          
+            Fruit fruit = new Fruit();
+            int startingIndex = 0;
+
+            fruit.Id = reader.GetInt32(startingIndex++);
+            fruit.Name = reader.GetString(startingIndex++);
+            fruit.Image = reader.GetString(startingIndex++);
+            fruit.UserId = reader.GetString(startingIndex++);
+            fruit.DateCreated = reader.GetDateTime(startingIndex++);
+            fruit.DateModfied = reader.GetDateTime(startingIndex++);
+
+            return fruit;
+        }
+
         public int Create(FruitCreateRequest model)
         {
             int createId = -1;
@@ -70,40 +85,30 @@ namespace AppleBrainsSite.Services
                         if (reader.HasRows)
                         {
 
-                            reader.Read();
-
-                            Fruit fruit = new Fruit();
-                            int startingIndex = 0;
-
-                            if (list == null)
+                            while (reader.Read())
+                            {
+                               if (list == null)
                             {
                                 list = new List<Fruit>();
                             }
 
-                           // while (reader.Read())
-                       //     {
+                            Fruit fruit = new Fruit();
+                            int startingIndex = 0;
+
                             fruit.Id = reader.GetInt32(startingIndex++);
                             fruit.Name = reader.GetString(startingIndex++);
                             fruit.Image = reader.GetString(startingIndex++);
                             fruit.UserId = reader.GetString(startingIndex++);
                             fruit.DateCreated = reader.GetDateTime(startingIndex++);
                             fruit.DateModfied = reader.GetDateTime(startingIndex++);
-                          //  }
-                            
 
                             list.Add(fruit);
-
-                            
-
+                            }
                         }
-
-                    }
-                 
-                    
+                    }                                  
                 }
             }
            
-
             return list;
         }
     }

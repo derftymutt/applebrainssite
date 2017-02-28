@@ -13,6 +13,10 @@
             return $http.post('/api/fruit/create', data);
         };
 
+        service.get = function () {
+            return $http.get('/api/fruit');
+        }
+
 
         return service;
     }
