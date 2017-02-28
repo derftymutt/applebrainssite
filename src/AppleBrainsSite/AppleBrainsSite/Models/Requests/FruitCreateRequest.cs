@@ -15,6 +15,7 @@ namespace AppleBrainsSite.Models.Requests
 
         [Required]
         [Url]
+        [MaxLength(500)]
         public string Image { get; set; }
 
         [Required]

@@ -1,4 +1,5 @@
-﻿using AppleBrainsSite.Models.Requests;
+﻿using AppleBrainsSite.Domain;
+using AppleBrainsSite.Models.Requests;
 using AppleBrainsSite.Models.Responses;
 using AppleBrainsSite.Services;
 using System;
@@ -33,6 +34,17 @@ namespace AppleBrainsSite.Controllers.ApiControllers
             int id = _fruitService.Create(model);
             ItemResponse<int> responseData = new ItemResponse<int>();
             responseData.Item = id;
+
+            return Request.CreateResponse(HttpStatusCode.OK, responseData);
+        }
+
+        [Route]
+        [HttpGet]
+        public HttpResponseMessage GetAll(Fruit model)
+        {
+         
+            ItemsResponse<Fruit> responseData = new ItemsResponse<Fruit>();
+            responseData.Items = _fruitService.GetAll();
 
             return Request.CreateResponse(HttpStatusCode.OK, responseData);
         }

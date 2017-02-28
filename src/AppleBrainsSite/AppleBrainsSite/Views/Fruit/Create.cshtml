@@ -11,7 +11,8 @@
 .formDiv {
     /*margin: auto 0;*/
     border: 1px solid black;
-    margin-bottom: 10px;
+    margin-top: 50px;
+    margin-bottom: 50px;
     background-color: lightgreen;
     padding-bottom: 10px;
 }
@@ -20,6 +21,9 @@
         font-style:italic; 
     }
 
+    #fruitImage {
+        max-width: 200px;
+    }
     </style>
     
     
@@ -37,27 +41,33 @@
             <div class="col-md-6 col-md-offset-3 formDiv">
                 <h2>Add a <span class="fruitColor">Fruit!</span></h2>
 
-                <form name="fruitCreateForm" ng-submit="fruit.onFruitSubmit()">
+                <form name="fruit.fruitForm" ng-submit="fruit.onFruitSubmit()" novalidate>
+
+                    <div role="alert" class="help-inline error">
+                        <span class="error" ng-show="fruit.showErrors && fruit.fruitForm.$error.required">A name is required</span>
+                        <span class="error" ng-show="fruit.showErrors && fruit.fruitForm.$error.maxlength">50 character max</span>
+                    </div>
 
                     <div class="form-group">
                         <label for="email">Fruit name:</label>
                         <input type="text" class="form-control" id="fruitName" ng-maxlength="50" ng-model="fruit.data.name" required>
                     </div>
 
-                    <div class="form-group" ng-hide="fruit.uploadSuccess">
+                    <div class="form-group" ng-hide="fruit.afterUploadSuccess">
                         <label for="fruitFile">Upload:</label>
                         <input type="file" name ="fruitUpload" id="fruitFile">
                     </div>
                         
-                    <div class="form-group" ng-show="fruit.uploadSuccess">
+                    <div class="form-group" ng-show="fruit.afterUploadSuccess" id="fruitImage">
                         <h1>{{fruit.data.name}}!!!!!!</h1>
                         <img ng-src="{{fruit.data.image}}" />
                     </div>  
                                
-                    <button type="submit" class="btn btn-default">{{fruit.submitForm}}</button>
-                    <button type="button" class="btn btn-warning" ng-click="fruit.onClearForm()" ng-show="fruit.uploadSuccess">Add Another fruit!</button>
+                    <button type="submit" class="btn btn-success">{{fruit.submitForm}}</button>
+                    <button type="button" class="btn btn-warning" ng-click="fruit.onClearForm()" ng-show="fruit.afterUploadSuccess">Add Another fruit!</button>
 
-                </form>             
+                </form>  
+                           
             </div>
 
             
@@ -90,7 +100,7 @@
                 vm.uploadsService = uploadsService;
                 vm.fruitService = fruitService;
                 vm.submitForm = "Submit";
-
+                vm.showErrors = false;
 
                 
                 //functions
@@ -100,32 +110,36 @@
 
                 function _onClearForm() {
                     vm.submitForm = "Submit";
-                    vm.uploadSuccess = false;
+                    vm.afterUploadSuccess = false;
                     vm.data = {};
                 }
 
                 function _onFruitSubmit() {
-                    vm.fileInput = angular.element('input[type=file]');
-                    vm.fileAsFormData = new FormData();
-                    vm.fileForUpload = vm.fileInput.get(0).files;
 
-                    for (var i = 0; i < vm.fileForUpload.length; i++) {
-                        var fileObject = vm.fileForUpload[i];
-                        vm.fileAsFormData.append(i, fileObject);
-                    }
+                    vm.showErrors = true;
+                    if (vm.fruitForm.$valid) {
+                        vm.fileInput = angular.element('input[type=file]');
+                        vm.fileAsFormData = new FormData();
+                        vm.fileForUpload = vm.fileInput.get(0).files;
 
-                    vm.eventConfig = {
-                        headers: {
-                            'Content-Type': undefined
+                        for (var i = 0; i < vm.fileForUpload.length; i++) {
+                            var fileObject = vm.fileForUpload[i];
+                            vm.fileAsFormData.append(i, fileObject);
                         }
+                        vm.eventConfig = {
+                            headers: {
+                                'Content-Type': undefined
+                            }
+                        }
+                        vm.uploadsService.create(vm.fileAsFormData).then(_onFileUploadSuccess, _onFileUploadError);
                     }
-                    vm.uploadsService.create(vm.fileAsFormData).then(_onFileUploadSuccess, _onFileUploadError);
+                 
                 }
 
                 function _onFileUploadSuccess(response) {
                     vm.$log.debug("success, see!?", response);
                     vm.data.image = response.data.Item;
-                    vm.data.userId = 'abc123';
+                    vm.data.userId = 'admin123';
 
                     vm.fruitService.create(vm.data).then(_onFruitCreateSuccess, _onFruitCreateError);
 
@@ -137,7 +151,7 @@
 
 
                 function _onFruitCreateSuccess(data) {
-                    vm.uploadSuccess = true;
+                    vm.afterUploadSuccess = true;
                     vm.submitForm = "Edit";
                     vm.$log.debug("fruit create success!: ", data);
                 }
