@@ -27,7 +27,7 @@
     
     }
 
-<div ng-controller="controller as main">
+<div ng-controller="fruitController as fruit">
    
         
        
@@ -36,23 +36,32 @@
             
             <div class="col-md-6 col-md-offset-3 formDiv">
                 <h2>Add a <span class="fruitColor">Fruit!</span></h2>
-                <form>
+
+                <form name="fruitCreateForm" ng-submit="fruit.onFruitSubmit()">
+
                     <div class="form-group">
                         <label for="email">Fruit name:</label>
-                        <input type="text" class="form-control" id="fruitName">
+                        <input type="text" class="form-control" id="fruitName" ng-maxlength="50" ng-model="fruit.data.name" required>
                     </div>
-                    <div class="form-group">
+
+                    <div class="form-group" ng-hide="fruit.uploadSuccess">
                         <label for="fruitFile">Upload:</label>
-                        <input type="file" id="fruitFile">
-                    </div>   
-                    <div class="form-group">
-                        <label for="imageUrl">Image Url:</label>
-                        <input type="text" class="form-control" id="fruitImage">
-                    </div>    
+                        <input type="file" name ="fruitUpload" id="fruitFile">
+                    </div>
+                        
+                    <div class="form-group" ng-show="fruit.uploadSuccess">
+                        <h1>{{fruit.data.name}}!!!!!!</h1>
+                        <img ng-src="{{fruit.data.image}}" />
+                    </div>  
                                
-                    <button type="submit" class="btn btn-default">Submit</button>
-                </form>
+                    <button type="submit" class="btn btn-default">{{fruit.submitForm}}</button>
+                    <button type="button" class="btn btn-warning" ng-click="fruit.onClearForm()" ng-show="fruit.uploadSuccess">Add Another fruit!</button>
+
+                </form>             
             </div>
+
+            
+
         </div>
 
 
@@ -62,23 +71,81 @@
 
 
 @section scripts {
+    <script src="~/Scripts/services/uploads.js"></script>
+    <script src="~/Scripts/services/fruit.js"></script>
+
     <script>
 
         (function () {
 
-            angular.module("app").controller("controller", Controller);
+            angular.module("app").controller("fruitController", FruitController);
 
-            Controller.$inject = ['$log'];
+            FruitController.$inject = ['$log', 'uploadsService', 'fruitService'];
 
-            function Controller($log) {
+            function FruitController($log, uploadsService, fruitService) {
              
-                vm = this;
+                //variables
+                var vm = this;
+                vm.$log = $log;
+                vm.uploadsService = uploadsService;
+                vm.fruitService = fruitService;
+                vm.submitForm = "Submit";
 
-               // $baseController.merge($baseController, vm);
 
-                vm.test = "TESTING ANGULAR";
+                
+                //functions
+                vm.onFruitSubmit = _onFruitSubmit;
+                vm.onClearForm = _onClearForm;
 
-                $log.debug("vm.test: ", vm.test);
+
+                function _onClearForm() {
+                    vm.submitForm = "Submit";
+                    vm.uploadSuccess = false;
+                    vm.data = {};
+                }
+
+                function _onFruitSubmit() {
+                    vm.fileInput = angular.element('input[type=file]');
+                    vm.fileAsFormData = new FormData();
+                    vm.fileForUpload = vm.fileInput.get(0).files;
+
+                    for (var i = 0; i < vm.fileForUpload.length; i++) {
+                        var fileObject = vm.fileForUpload[i];
+                        vm.fileAsFormData.append(i, fileObject);
+                    }
+
+                    vm.eventConfig = {
+                        headers: {
+                            'Content-Type': undefined
+                        }
+                    }
+                    vm.uploadsService.create(vm.fileAsFormData).then(_onFileUploadSuccess, _onFileUploadError);
+                }
+
+                function _onFileUploadSuccess(response) {
+                    vm.$log.debug("success, see!?", response);
+                    vm.data.image = response.data.Item;
+                    vm.data.userId = 'abc123';
+
+                    vm.fruitService.create(vm.data).then(_onFruitCreateSuccess, _onFruitCreateError);
+
+                }
+
+                function _onFileUploadError() {
+                    vm.$log.debug("error uploading file");
+                }
+
+
+                function _onFruitCreateSuccess(data) {
+                    vm.uploadSuccess = true;
+                    vm.submitForm = "Edit";
+                    vm.$log.debug("fruit create success!: ", data);
+                }
+
+                function _onFruitCreateError() {
+                    vm.$log.debug("Error creating fruit :(");
+                }
+
             }
 
         }());

@@ -18,6 +18,8 @@ namespace AppleBrainsSite
             // e.g. container.RegisterType<ITestService, TestService>();
 
             container.RegisterType<IFruitService, FruitService>();
+
+            container.RegisterType<IUploadsService, UploadsService>();
            
             DependencyResolver.SetResolver(new Unity.Mvc5.UnityDependencyResolver(container));
             //GlobalConfiguration.Configuration

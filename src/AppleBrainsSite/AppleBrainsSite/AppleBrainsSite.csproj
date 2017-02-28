@@ -17,7 +17,7 @@
     <AssemblyName>AppleBrainsSite</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -238,6 +238,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApiControllers\BaseApiController.cs" />
     <Compile Include="Controllers\ApiControllers\FruitApiController.cs" />
+    <Compile Include="Controllers\ApiControllers\LocalUploadsApiController.cs" />
     <Compile Include="Controllers\ApiControllers\TestDIApiController.cs" />
     <Compile Include="Controllers\FruitController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -258,6 +259,8 @@
     <Compile Include="Services\BaseService.cs" />
     <Compile Include="Services\FruitService.cs" />
     <Compile Include="Services\Interfaces\IFruitService.cs" />
+    <Compile Include="Services\Interfaces\IUploadsService.cs" />
+    <Compile Include="Services\UploadsService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -542,6 +545,8 @@
     <Content Include="Scripts\Ng\BaseController.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\services\fruit.js" />
+    <Content Include="Scripts\services\uploads.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -641,7 +646,9 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>55587</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:55587/</IISUrl>
+          <IISUrl>http://poeticfruit.dev</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://poeticfruit.dev</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
