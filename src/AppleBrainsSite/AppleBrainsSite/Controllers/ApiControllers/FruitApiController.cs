@@ -23,7 +23,8 @@ namespace AppleBrainsSite.Controllers.ApiControllers
         }
 
 
-        [Route("create")][HttpPost]
+        [Route("create")]
+        [HttpPost]
         public HttpResponseMessage Create(FruitCreateRequest model)
         {
             if (!IsValidRequest(model))
